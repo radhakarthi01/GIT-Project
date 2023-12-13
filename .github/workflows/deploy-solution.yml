@@ -2,7 +2,7 @@ name: Deploy DEVALMSolution
  
 on:
   workflow_run:
-    workflows: ['Pack DEVALMSolution']
+    workflows: ["Pack DEVALMSolution"]
     branches: [main]
     types:
       - completed
