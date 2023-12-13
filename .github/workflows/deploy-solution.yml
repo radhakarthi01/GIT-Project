@@ -1,0 +1,25 @@
+name: Deploy DEVALMSolution
+ 
+on:
+  workflow_run:
+    workflows: ["Pack DEVALMSolution"]
+    branches: [main]
+    types:
+      - completed
+  workflow_dispatch:
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: pack-solution.yml
+          name: packed-solution
+      - uses: microsoft/powerplatform-actions/import-solution@v0
+        with:
+          environment-url: https://org60dd4680.crm3.dynamics.com/
+          user-name: ${{ secrets.USERNAME }}
+          password-secret: ${{ secrets.PASSWORD }}
+          solution-file: DEVALMSolution.zip
